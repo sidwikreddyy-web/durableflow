@@ -7,6 +7,9 @@ spring:
     password: ${DATABASE_PASSWORD:durableflow}
   flyway:
     enabled: true
+  threads:
+    virtual:
+      enabled: true
 
 server:
   port: ${PORT:8080}
@@ -19,3 +22,18 @@ management:
   endpoint:
     health:
       show-details: never
+
+durableflow:
+  auth:
+    issuer: durableflow
+    jwt-secret: ${JWT_SECRET:local-development-secret-change-me-1234567890}
+    access-token-ttl: PT15M
+    refresh-token-ttl: P30D
+    secure-cookies: ${SECURE_COOKIES:false}
+  cors:
+    allowed-origins: ${ALLOWED_ORIGINS:http://localhost:3000}
+  worker:
+    enabled: ${WORKER_ENABLED:true}
+    poll-delay-ms: 1000
+    lease-seconds: 30
+    batch-size: 10
