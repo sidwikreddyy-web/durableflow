@@ -38,6 +38,22 @@ The generated context test uses Testcontainers and requires Docker.
 - Actuator
 - JUnit, Spring Security Test, and Testcontainers for PostgreSQL
 
+## Package structure
+
+```text
+com.sidwik.durableflow
+├── config       Spring bean and application configuration
+├── controller   HTTP request and response handling
+├── domain       Business objects, states, and invariants
+├── dto          API request and response records
+├── exception    Domain and API exceptions
+├── mapper       Boundary conversions between domain, API, and persistence
+├── repository   Persistence interfaces and PostgreSQL implementations
+├── security     Authentication and authorization
+├── service      Application use cases and transaction boundaries
+└── worker       Distributed activity consumers
+```
+
 ## Suggested first milestone
 
 Implement an in-memory workflow API before connecting it to PostgreSQL:
