@@ -30,6 +30,7 @@ durableflow:
     access-token-ttl: PT15M
     refresh-token-ttl: P30D
     secure-cookies: ${SECURE_COOKIES:false}
+    cookie-same-site: ${COOKIE_SAME_SITE:Lax}
   cors:
     allowed-origins: ${ALLOWED_ORIGINS:http://localhost:3000}
   worker:

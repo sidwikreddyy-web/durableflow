@@ -25,12 +25,15 @@ public class AuthController {
     private final AuthService authService;
     private final TokenService tokenService;
     private final boolean secureCookies;
+    private final String cookieSameSite;
 
     public AuthController(AuthService authService, TokenService tokenService,
-                          @Value("${durableflow.auth.secure-cookies:false}") boolean secureCookies) {
+                          @Value("${durableflow.auth.secure-cookies:false}") boolean secureCookies,
+                          @Value("${durableflow.auth.cookie-same-site:Lax}") String cookieSameSite) {
         this.authService = authService;
         this.tokenService = tokenService;
         this.secureCookies = secureCookies;
+        this.cookieSameSite = cookieSameSite;
     }
 
     @PostMapping("/register")
@@ -74,13 +77,13 @@ public class AuthController {
 
     private ResponseCookie refreshCookie(String value) {
         return ResponseCookie.from(REFRESH_COOKIE, value)
-                .httpOnly(true).secure(secureCookies).sameSite("Lax").path("/api/auth")
+                .httpOnly(true).secure(secureCookies).sameSite(cookieSameSite).path("/api/auth")
                 .maxAge(tokenService.refreshTokenTtl()).build();
     }
 
     private ResponseCookie expiredCookie() {
         return ResponseCookie.from(REFRESH_COOKIE, "")
-                .httpOnly(true).secure(secureCookies).sameSite("Lax").path("/api/auth")
+                .httpOnly(true).secure(secureCookies).sameSite(cookieSameSite).path("/api/auth")
                 .maxAge(0).build();
     }
 }
