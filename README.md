@@ -180,3 +180,11 @@ npm run dev
 ```
 
 Set `NEXT_PUBLIC_API_URL` to the public Spring Boot API URL when deploying to Vercel. On the API deployment, set `ALLOWED_ORIGINS` to the Vercel origin. If those URLs belong to different sites, also set `SECURE_COOKIES=true` and `COOKIE_SAME_SITE=None`.
+
+## Free hosting layout
+
+- Import the repository into Render as a Blueprint. `render.yaml` builds the Spring Boot Dockerfile, configures the health check, and prompts for the Supabase JDBC connection values and final frontend origin.
+- Import the same repository into Vercel and select `frontend` as the project Root Directory. Set `NEXT_PUBLIC_API_URL` to the Render service URL before building.
+- Use a Supabase Postgres project for persistent data; Flyway applies the schema on the API's first startup.
+
+Render's free web service sleeps after idle time. A new HTTP request wakes it, and the durable worker resumes pending database tasks after startup. This is suitable for a portfolio deployment, but active background processing requires always-on compute.
