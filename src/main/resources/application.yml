@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: durableflow
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/durableflow}
+    username: ${DATABASE_USERNAME:durableflow}
+    password: ${DATABASE_PASSWORD:durableflow}
+  flyway:
+    enabled: true
+
+server:
+  port: ${PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
