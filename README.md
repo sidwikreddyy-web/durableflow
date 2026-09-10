@@ -138,6 +138,7 @@ Copy `.env.example` values into your environment or deployment platform. Local d
 | `JWT_SECRET` | HMAC key, at least 32 bytes; required to be unique in production |
 | `ALLOWED_ORIGINS` | Comma-separated browser origins |
 | `SECURE_COOKIES` | Set `true` behind HTTPS |
+| `COOKIE_SAME_SITE` | Use `None` with secure cookies when frontend and API use different sites |
 | `WORKER_ENABLED` | Enable task polling in this process |
 | `PORT` | HTTP port |
 
@@ -166,3 +167,16 @@ com.sidwik.durableflow
 ```
 
 No hand-written tests were added in this MVP. Build without running the generated test with `./mvnw -DskipTests package`.
+
+## Next.js frontend
+
+The `frontend` directory contains the application UI: first-party registration and login, automatic refresh-token rotation, a workflow launcher, live status polling, cancellation, and a complete event timeline.
+
+```bash
+cd frontend
+cp .env.example .env.local
+npm install
+npm run dev
+```
+
+Set `NEXT_PUBLIC_API_URL` to the public Spring Boot API URL when deploying to Vercel. On the API deployment, set `ALLOWED_ORIGINS` to the Vercel origin. If those URLs belong to different sites, also set `SECURE_COOKIES=true` and `COOKIE_SAME_SITE=None`.
